@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/toast.min.css">
+	<link rel="stylesheet" href="assets/css/core.css">
+	<link rel="stylesheet" href="assets/css/JuanFi.css">
+    <title>Status</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="assets/js/config.js"></script>
+	<script src="assets/js/pako.min.js"></script>
+	<script defer src="assets/js/data.js"></script>
+	<script>
+		var loginError = "";
+		var mac = "$(mac)";
+		var logoutUrl = "$(link-logout)";
+		var hotspotAddress = "$(server-address)"; 
+		var interfaceName = "$(interface-name)";
+		var remainingTimer = null;
+	</script>
+
+</head>
+<body id="loginBody">
+
+<!-- Messenger Chat plugin Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Chat plugin code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "108240834062058");
+      chatbox.setAttribute("attribution", "biz_inbox");
+
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v12.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+<div class="container">
+<center>
+		<form action="$(link-logout)" name="logout" >
+		</form>
+
+		<form action="$(link-logout)" name="forcelogout" >
+			<input type="hidden" name="erase-cookie" value="true" />
+		</form>
+		
+        <div>
+            <div class="col-sm-lg">
+                <div style="margin-bottom: 20px">
+                    <img src="assets/Alvin12.webp" width="100%" class="img-fluid rounded-corners" />
+                </div>
+				
+				
+				<div class="border">
+				  <small><i class="fa fa-map-marked-alt"></i>&nbsp;$(ip)&nbsp;&nbsp;<i class="fa fa-network-wired"></i>&nbsp;$(mac)</small>
+				</div>
+				</div>
+				
+				<center class="breathfx" style="margin-bottom: -2px;margin-top: 10px">
+				<small class="status-connected"><i class="fa fa-wifi"></i>&nbsp;<b>CONNECTED</b>&nbsp;</small><br>
+                </center
+            </div>
+            <hr style="margin-bottom: 11px" class="prettyline"></hr>
+            <div>
+                <div class="login">
+				
+				
+				
+				<div class="info-status">
+				<center>
+					<div class="info-title"><img src="assets/img/time.png" width="20px" height="20px" /><span> Remaining Time</span></div>
+						<span class="odometer" id="remainTime" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 3px #000"></span><!--<br>-->
+						
+						<div class="info-title"><img src="assets/img/voucher.png" width="20px" height="20px" /><span> Voucher</span></div>
+						<span style="font-size: 12px; font-weight: bold; text-shadow: 1px 1px 3px #000">$(username)</span>
+																	
+						<div class="info-title"><img src="assets/img/timeexpired.png" width="20px" height="20px" /><span> Expiration Time</span></div>
+						<span id="expirationTime" style="font-size: 12px; font-weight: bold; text-shadow: 1px 1px 3px #000"></span>
+				</center>
+					
+					<div id="vendoSelectDiv" style="margin-top: 20px">
+						<label for="exampleFormControlSelect2">Select Vendo</label>
+						<select class="form-control" name="vendoSelected" id="vendoSelected" >
+						</select>
+					</div>
+
+					<div class="button-jittery" style="margin-top:8px;">
+					<button type="button" id="insertBtn" onclick="insertBtnAction(); return false" class="btn btn-success btn-block btn-lg" data-insert-type="extend" data-toggle="modal" style="display: block; width: 100%; color: #fff; text-shadow: 0px 1px 2px #000;"><i class="fa fa-plus-circle"></i>&nbsp;EXTEND TIME</button>
+					<div style="margin-bottom:8px;"></div>
+					</div>
+					<div style="margin-bottom:8px"></div>
+					<button type="button" id="pauseTimeBtn" onClick="pause(); return false" class="btn btn-danger btn-block" style="display: block; width: 100%; color: #fff; text-shadow: 0px 1px 2px #000;"><i class="fa fa-pause"></i>&nbsp;PAUSE TIME</button>
+          			<div style="margin-bottom:8px"></div>
+	
+					<div class="modal fade" id="insertCoinModal" style="z-index: 1500" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="insertCoinModalTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							<div class="qrdiv">
+							  <class="modal-title">
+							  <center><img class="img-fluid" src="assets/insert-coin-animation.gif" style="margin:10px auto;" /></center>
+							<div class="modal-body">
+								  <div class="progress" style="margin-bottom: 20px">
+									  <div id="progressDiv" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; height: 30px"></div>
+								  </div>
+  
+								  <div id="noticeDiv" style="display: none">
+									  <center>
+										  <h4 id="noticeText">Coin is reading, please wait</h4>
+									  </center>
+								  </div>
+								  
+								  <div class="inscoin">
+								  <center>
+								  <div class="inscoinholder" style="border: 2px solid #9FEDFF; padding: 5px; height: 90px; border-radius: 3px">
+								  <span style="color: #222222">Your code is</span><br>
+								  <span id="codeGeneratedBlock">
+									  <span id="codeGenerated" style="font-size: 35px; font-weight: bold; color: #4cd137">*****</span>
+								  </span>
+								  </div>							  
+								  <div class="inscoinholder">
+								  <span id="totalCoin" style="font-size: 20px; font-weight: bold; color: #222222">0</span><span style="font-size: 20px; font-weight: bold; color: #222222">.00 Php</span><br>
+								  <span style="color: #222222">Coin</span>
+								  </div>
+								  
+								  <div class="inscoinholder" id="totalTimeDiv">
+								  <span id="totalTime" style="font-size: 20px; font-weight: bold; color: #222222"></span><br>
+								  <span style="color: #2222222">Time: </span>
+								  </div>
+								  
+								  <div class="inscoinholder" id="expectedCoinDiv" style="display: none">
+								  <span id="expectedCoin" style="font-size: 20px; font-weight: bold; color: #222222"></span><br>
+								  <span style="color: #222222">Expected Coin </span>
+								  </div>
+								  
+								  </center>
+								  </div>
+								  
+								  
+								  
+							</div>
+							<div>
+							  <button type="button" id="saveVoucherButton" data-save-type="extend" onclick="saveVoucherBtnAction(); return false" class="btn btn-primary btn-block" data-dismiss="modal">Connect</button>
+							  <button type="button" id="cncl" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+							</div>
+						  </div>
+						</div>
+					  </div></div></div>
+					
+					            
+
+                
+				<hr style="margin-bottom: 11px" class="prettyline"></hr>
+			<div class="footer">
+					<span class="footers">
+					Powered by: <a href="">ALVIN</a><br>
+					
+					</span>				
+				</div>
+            </div>	
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/popper.min.js"></script>
+			<script src="assets/js/bootstrap.min.js"></script>
+			<script src="assets/js/toast.min.js"></script>
+			<script src="assets/js/core.js"></script>
+			<script src="assets/js/eload.js"></script>
+			<script src="assets/js/pako.min.js"></script>
+
+			
+			
+			<script>
+				var sessiontime = "$(session-time-left-secs)";
+				var uptime = "$(uptime-secs)";
+				var currentVoucher = "$(username)";
+				window.name="hotspot_status";
+				
+				$(document).ready(function(){
+					voucher = currentVoucher;
+					$("#expirationTime").html("Loading...");
+					setTimeout(function(){
+						fetchValidity(1);
+					}, 1000);
+					
+					setStorageValue('activeVoucher', currentVoucher);
+					
+					var time = sessiontime;
+					if(time == "0"){
+						$("#remainTime").html("Unlimited");
+					}else{
+						$("#remainTime").html(secondsToDhms(time));
+						remainingTimer = setInterval(function(){
+							time--;
+							$("#remainTime").html(secondsToDhms(time));
+							if(time <= 0){
+								$.toast({
+									title: 'Success',
+									content: 'Time limit exceeded, Thank you for the purchase, will be logout shortly',
+									type: 'success',
+									delay: 5000
+								});
+								clearInterval(remainingTimer);
+								setTimeout(function(){
+									document.logout.submit();
+								}, 6000);
+							}
+						}, 1000);
+					}
+					
+				});
+				
+				function fetchValidity(retryNo){
+					if(retryNo > 5){
+						fallbackValidity();
+						return;
+					}
+					var macNoColon = replaceAll(mac, ":");
+					$.ajax({
+							  type: "GET",
+							  url: "/data/"+macNoColon+".txt?query="+new Date().getTime(),
+							  success: function(data){
+								if(data.length > 50){
+									setTimeout(function(){
+										fetchValidity(retryNo++);
+									}, 1000);
+									return;
+								}
+								var macData = data.split("#");
+								var validityRaw = macData[1];
+								
+								var validityTime = null;
+								if(validityRaw.length > 15){
+									validityTime = new Date(Date.parse(validityRaw));
+								}else if(validityRaw.length > 8){
+									var dt = validityRaw.split(" ");
+									var yr = new Date().getFullYear();
+									validityTime = new Date(Date.parse(dt[0]+"/"+yr+" "+dt[1]));
+								}else if(validityRaw.length == 0){
+									validityTime = null;
+								} else{
+									var curDate = new Date();
+									var m = curDate.getMonth()+1;
+									var d = curDate.getDate();
+									var yr = curDate.getFullYear();
+									validityTime = new Date(Date.parse(m+"/"+d+"/"+yr+" "+validityRaw));
+								}
+								if(validityTime != null){
+									$("#expirationTime").html(validityTime.toLocaleString());
+								}else{
+									$("#expirationTime").html("No Expiration");
+								}
+							  },
+							  error: function(d){
+									fallbackValidity();
+							 }
+					});			
+				}
+				
+				function fallbackValidity(){
+					var validity = getStorageValue(voucher+"validity");
+					if(validity != null){
+						var curDate = new Date();
+						var validityTime = new Date(parseInt(validity));
+						if(validityTime.getTime() < curDate.getTime()){
+							removeStorageValue(voucher+"validity");
+							removeStorageValue(voucher+"tempValidity");
+							$("#expirationTime").html("Not Available");
+						}else{
+							$("#expirationTime").html(validityTime.toLocaleString());
+						}
+					}else{
+						$("#expirationTime").html("Not Available");
+					}
+				}
+				
+				$(if refresh-timeout)
+					setInterval(function(){
+						if(!insertingCoin){
+							location.reload();
+						}
+					}, $(refresh-timeout-secs) * 1000);
+				$(endif)
+			</script>
+			
+			
+			<div id="loaderDiv" class="spinner hidden">
+				<center>
+					<img src="assets/loading.svg" />
+				</center>
+			</div>
+</div>
+</center>
+</div>
+</body>
+
+</html>

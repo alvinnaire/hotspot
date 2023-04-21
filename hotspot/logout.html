@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+	/* Slide Style */
+* {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif;}
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+/* .slideshow-container{background-color:#FFF;padding:20px;max-width:430px;margin:auto;margin-top:20px;border:4px solid rgba(108,186,217,.46);border-radius:10px} */
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+</style>
+
+<head>
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/toast.min.css">
+	<link rel="stylesheet" href="assets/css/core.css">
+	<link rel="stylesheet" href="assets/css/JuanFi.css">
+    <title>Status</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="assets/js/config.js"></script>
+    <script defer src="assets/js/data.js"></script>
+
+</head>
+<body id="loginBody">
+
+<div class="container">
+<center>
+		<form action="$(link-logout)" name="logout" >
+			<input type="hidden" name="erase-cookie" value="true" />
+		</form>
+		
+        <div>
+            <div class="col-sm-lg">
+                <div class="slideshow-container">
+
+					<div class="mySlides fade">
+					  <div class="numbertext">1 / 3</div>
+					  <img src="assets/Alvin12.webp" class="img-fluid rounded-corners" />
+					  <div class="text">Caption Text</div>
+					</div>
+					
+					<div class="mySlides fade">
+					  <div class="numbertext">2 / 3</div>
+					  <img src="assets/Alvin3.webp" class="img-fluid rounded-corners" />
+					  <div class="text">Caption Two</div>
+					</div>
+					
+					<div class="mySlides fade">
+					  <div class="numbertext">3 / 3</div>
+					  <img src="assets/Alvin4.webp" class="img-fluid rounded-corners" />
+					  <div class="text">Caption Three</div>
+					</div>
+					
+					</div>
+					<br>
+				
+				<div style="text-align:center">
+				  <span class="dot"></span> 
+				  <span class="dot"></span> 
+				  <span class="dot"></span> 
+				</div>
+				<div>
+				<div class="border">
+				  <small><i class="fa fa-map-marked-alt"></i>&nbsp;$(ip)&nbsp;&nbsp;<i class="fa fa-network-wired"></i>&nbsp;$(mac)</small>
+				</div>
+				</div>
+				
+				<center class="breathfx" style="margin-bottom: -2px;margin-top: 8px">
+				<small class="status-paused">&nbsp;<i class="fa fa-pause-circle"></i>&nbsp;<b>PAUSED</b>&nbsp;</small><br>
+                </center
+            </div>
+            <hr style="margin-bottom: 11px" class="prettyline"></hr>
+			
+            <div>
+                <div class="login">
+				<div class="info-status">
+				<center>
+					<center>
+							<span class="form-text text-muted" style="color: #222222!important; font-size: 20px; font-weight: bold">You're currently on pause</span>
+					<center>
+					<div class="info-title"><img src="assets/img/time.png" width="20px" height="20px" /><span> Remaining Time</span></div>
+						<span class="odometer" id="remainTime" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 3px #000"></span><!--<br>-->
+						
+						<div class="info-title"><img src="assets/img/voucher.png" width="20px" height="20px" /><span> Voucher</span></div>
+						<span style="font-size: 12px; font-weight: bold; text-shadow: 1px 1px 3px #000">$(username)</span>
+																	
+						<div class="info-title"><img src="assets/img/timeexpired.png" width="20px" height="20px" /><span> Expiration Time</span></div>
+						<span id="expirationTime" style="font-size: 12px; font-weight: bold; text-shadow: 1px 1px 3px #000"></span>
+				</center>
+					
+				</center>
+				</div>
+				<button type="button" id="connectBtn" onClick="resume(); return false" class="btn btn-info btn-block" style="margin-top: 20px; display: block; width: 100%; text-shadow: 0px 1px 3px #000;"><i class="fa fa-play"></i>&nbsp;RESUME TIME</button>
+				<div style="margin-bottom:8px;"></div>
+				<!--<button type="button" id="cancelBtn" onClick="cancelPause(); return false" class="btn btn-danger btn-block" style="display: block; width: 100%; color: #fff; text-shadow: 0px 1px 2px #000;"><i class="fa fa-user-times"></i>&nbsp;LOG-OUT</button>
+				<div style="margin-bottom:8px;"></div> -->
+
+                </div>
+			<hr style="margin-bottom: 11px" class="prettyline"></hr>
+			<div class="footer">
+					<span class="footers">
+					Powered by: <a href="">ALVIN</a></span>				
+				</div>
+            </div>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/popper.min.js"></script>
+			<script src="assets/js/bootstrap.min.js"></script>
+			<script src="assets/js/toast.min.js"></script>
+			<script src="assets/js/core.js"></script>
+			<script src="assets/js/eload.js"></script>
+
+			<script>
+				var loginError = "";
+				var mac = "$(mac)";
+				var logoutUrl = "$(link-logout)";
+				var remainingTimer = null;
+				var hotspotAddress = "$(server-address)"; 
+				var interfaceName = "$(interface-name)";
+		
+				$(document).ready(function(){
+					$("#expirationTime").html("Loading...");
+					setTimeout(function(){
+						fetchValidity(1);
+					}, 1000);
+				});
+			</script>
+
+			
+			<div id="loaderDiv" class="spinner hidden">
+				<center>
+					<img src="assets/loading.svg" />
+				</center>
+			</div>
+</div>
+</center>
+</div>
+<script>
+	let slideIndex = 0;
+	showSlides();
+	
+	function showSlides() {
+	  let i;
+	  let slides = document.getElementsByClassName("mySlides");
+	  let dots = document.getElementsByClassName("dot");
+	  for (i = 0; i < slides.length; i++) {
+		slides[i].style.display = "none";  
+	  }
+	  slideIndex++;
+	  if (slideIndex > slides.length) {slideIndex = 1}    
+	  for (i = 0; i < dots.length; i++) {
+		dots[i].className = dots[i].className.replace(" active", "");
+	  }
+	  slides[slideIndex-1].style.display = "block";  
+	  dots[slideIndex-1].className += " active";
+	  setTimeout(showSlides, 2000); // Change image every 2 seconds
+	}
+	</script>
+</body>
+
+</html>
